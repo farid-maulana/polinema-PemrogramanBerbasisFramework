@@ -36,6 +36,15 @@ class Mahasiswa extends Component {
       })
   }
 
+  deleteAllHandler = () => {
+    this.state.students.map(mahasiswa => {
+      fetch(`http://localhost:3001/mahasiswa/${mahasiswa.id}`, { method: 'DELETE' })
+        .then(response => {
+          this.getAllDataHandler()
+        })
+    })
+  }
+
   createNewDataHandler = (event) => {
     let formInsertStudent = { ...this.state.addStudent }
     formInsertStudent[event.target.name] = event.target.value
@@ -66,6 +75,7 @@ class Mahasiswa extends Component {
           buttonSave={this.buttonSaveHandler} />
         <hr />
         <h5>Data Mahasiswa</h5>
+        <button className='btn btn-secondary mt-3' id='deleteAll' onClick={this.deleteAllHandler}>Delete All</button>
         <div className='row g-3'>
           {
             this.state.students.map(mahasiswa => {
